@@ -18,10 +18,11 @@ while True :
         print('클라이언트 메세지 수신 : ', repr(msg.decode()))
     # 메세지 송신
         print('클라이언트 메세지 송신', addr)
-        if msg :
+        if msg:
             client.sendall('안녕 나는 서버야'.encode())
             print('메세지를 보냈습니다.')
-        else :
+
+        else:
             print('no Date', addr)
 
         break
