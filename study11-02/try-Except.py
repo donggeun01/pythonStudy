@@ -167,15 +167,18 @@ for i in range(ord('a'), ord('z')) :
 '''
 
 
-k = int(input('1. 암호화 2. 복호'))
+k = int(input('1. 암호화 2. 복호 : '))
 text = input("입력 파일명 :")
 
 if k == 1 :
     print('파일 암호화')
+    print('출력 파일명 : ',end="")
     for i in text :
-        print('출력 파일명 : ',chr(ord(i) + 200), end="")
+        print(chr(ord(i) + 200), end="")
 
 else :
     print('파일 복호화')
+    print('출력 파일명 : ',end="")
     for i in text:
-        print('출력 파일명 : ', chr(ord(i) - 200), end="")
+        print(chr(ord(i) - 200), end="")
+
