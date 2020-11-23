@@ -5,9 +5,11 @@
 
 import socket
 
-table = {'1':'one','2':'two','3':'three',
-         '4':'four','5':'five','6':'six','7':'seven',
-         '8':'eight','9':'nine','10':'ten'}
+i = 0
+table = {'one':'1','two':'2','three':'3',
+         'four':'4','five':'5'}
+a = list(table.keys())
+
 
 s = socket.socket()
 address = ("127.0.0.1", 4444)
@@ -19,14 +21,22 @@ print('Waiting...')
 conn, address = s.accept()
 print('Connection from', address)
 
+
 while True :
+    conn.send(a[i].encode())
     data = conn.recv(1024).decode()
+
     try :
-        resp = table[data]
+        resp = table[a[i]]
+        if resp == data :
+            i = i + 1
+            conn.send("정답입니다. ".encode())
+        else :
+            conn.send('정답이 아닙니다.'.encode())
     except :
         conn.send('정답이 아닙니다.'.encode())
-    else :
-        conn.send(resp.encode())
+
+
 
 
 

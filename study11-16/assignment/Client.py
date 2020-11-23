@@ -7,7 +7,9 @@ s = socket.socket()
 s.connect(address)
 
 while True :
-    msg = input("Message to send : ")
+    qu = s.recv(1024)
+    print("종료를 하길 원하시면 q 를 눌러주세요.")
+    msg = input("문제 %s : " %qu.decode())
     try :
         n = s.send(msg.encode())
     except :
@@ -20,8 +22,6 @@ while True :
         else :
             continue
 
-    else :
-        print("{} bytes sent" .format(n))
     s.settimeout(5.0)
     try :
         data = s.recv(1024)
