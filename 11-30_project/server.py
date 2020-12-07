@@ -12,6 +12,7 @@
 import socket
 import random
 
+count = 0
 ballList = []
 num = random.randrange(0,10)
 
@@ -36,28 +37,32 @@ s.listen()
 print('접속을 기다리고 있습니다.')
 conn, address = s.accept()
 print('사용자가 접속했습니다.', address)
+print(ballNumber)
 
 while True :
-    strike = 0
-    ball = 0
-    data = conn.recv(1024).decode()
-    resp = list(data)
-    print(ballNumber)
+    try :
+        strike = 0
+        ball = 0
+        data = conn.recv(1024).decode()
+        resp = list(data)
 
+        for i in range(4) :
+            if resp[i] == ballNumber[i] :
+                strike = strike + 1
+            elif resp[i] in ballNumber :
+                ball = ball + 1
+    except :
+        s.close()
+        print("프로그램 종료")
+        break;
 
-    for i in range(4) :
-        if resp[i] == ballNumber[i] :
-            strike = strike + 1
-            print(strike)
-        elif resp[i] in ballNumber :
-            ball = ball + 1
-    if(strike == 0 and ball == 0) :
-        conn.send("아웃입니다.".encode())
     else :
-        strikeCount = str(strike)
-        ballCount = str(ball)
-        conn.send(strikeCount.encode())
-        conn.send(ballCount.encode())
+        count = count + 1
+        print("스트라이크 : ", strike)
+        print("볼 : " , ball)
+        conn.send(str(count).encode())
+        conn.send(str(strike).encode())
+        conn.send(str(ball).encode())
 
 
 

@@ -30,10 +30,14 @@ while True :
         else :
             continue
     try :
+        count = s.recv(1024)
         strike = s.recv(1024)
         ball = s.recv(1024)
-        if strike.decode() == '4' :
+        if (strike.decode() == '0' and ball.decode() == '0'):
+            print("아웃입니다.")
+        elif strike.decode() == '4' :
             print("정답입니다.")
+            print("%s번에 맞추셨습니다." %count.decode())
             print("프로그램을 종료합니다.")
             s.close()
             break
@@ -42,4 +46,5 @@ while True :
         s.close()
         break
     else :
+        print("%s번 시도" % count.decode())
         print("%s 스트라이크 %s 볼" %(strike.decode(), ball.decode()))
